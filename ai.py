@@ -18,4 +18,25 @@ class Network(nn.Module):
         super(Network, self).__init__()
         self.input_size = input_size
         self.nb_action = nb_action
+        #connection from input layer to hidden layer
+        self.fc1 = nn.Linear(input_size, 30)
+        #connection from hidden layer to output layer
+        self.fc2 = nn.Linear(30, nb_action)
+        
+        #activate neurons
+        #state -> our inputs from input layer
+    def forward(self, state):
+        #activation function for hidden neurons
+        hidden_neurons = F.relu(self.fc1(state))
+        q_values = self.fc2(hidden_neurons)
+        return q_values
+
+#Implement Experience Replay
+class ReplayMemory(object):
+    
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.memory = []
+    
+    
         
